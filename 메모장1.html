@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>메모</title>
+  </head>
+  <body>
+    <h1>메모</h1>
+    <textarea id="memo"></textarea>
+    <button onclick="saveMemo()">메모하기</button>
+    <hr>
+    <h2>메모 내역</h2>
+    <ul id="memoList"></ul>
+
+    <script>
+      function saveMemo() {
+        var memo = document.getElementById("memo").value;
+        var memoList = JSON.parse(localStorage.getItem("memoList")) || [];
+        memoList.push(memo);
+        localStorage.setItem("memoList", JSON.stringify(memoList));
+        document.getElementById("memo").value = "";
+        loadMemoList();
+      }
+
+      function loadMemoList() {
+        var memoList = JSON.parse(localStorage.getItem("memoList")) || [];
+        var listItems = memoList.map(function(memo){
+          return "<li>" + memo + "</li>";
+        }).join("");
+        document.getElementById("memoList").innerHTML = listItems;
+      }
+
+      loadMemoList();
+    </script>
+
+    <footer>
+      <p>made by 배윤후</p>
+    </footer>
+  </body>
+</html>
